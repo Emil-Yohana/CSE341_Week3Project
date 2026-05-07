@@ -5,7 +5,6 @@ const port = 8080;
 const professionalRoutes = require('./routes/professional');
 const MongoClient = require('mongodb').MongoClient;
 const mongodb = require('./db/connect');
-j
 
 app.use(cors());
 app.use('/professional', professionalRoutes);
