@@ -13,6 +13,9 @@ const getAllData = (req, res) => {
 };
 
 const getData = (req, res) => {
+    if (!ObjectId.isValid(req.params.id)) {
+        res.status(400).json('Must use a valid product id to find a product.');
+    }
     const userId = new ObjectId(req.params.id);
     mongodb.getDb().db('CSE341').collection('products').find({ _id: userId }).toArray((err, result) => {
         if (err) {
@@ -45,6 +48,9 @@ const createData = async (req, res) => {
 };
 
 const updateData = async (req, res) => {
+    if (!ObjectId.isValid(req.params.id)) {
+        res.status(400).json('Must use a valid product id to update a product.');
+    }
     const userId = new ObjectId(req.params.id);
     const product = {
         productId: req.body.productId,
@@ -66,6 +72,9 @@ const updateData = async (req, res) => {
 }; 
 
 const deleteData = async (req, res) => {
+    if (!ObjectId.isValid(req.params.id)) {
+        res.status(400).json('Must use a valid product id to delete a product.');
+    }
     const userId = new ObjectId(req.params.id);
     const response = await mongodb.getDb().db('CSE341').collection('products').deleteOne({ _id: userId });
     if (response.deletedCount > 0) {

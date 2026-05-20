@@ -13,6 +13,9 @@ const getAllData = (req, res) => {
 };
 
 const getData = (req, res) => {
+    if (!ObjectId.isValid(req.params.id)) {
+        res.status(400).json('Must use a valid user id to find a user.');
+    }
     const userId = new ObjectId(req.params.id);
     mongodb.getDb().db('CSE341').collection('users').find({ _id: userId }).toArray((err, result) => {
         if (err) {
@@ -44,6 +47,9 @@ const createData = async (req, res) => {
 };
 
 const updateData = async (req, res) => {
+    if (!ObjectId.isValid(req.params.id)) {
+        res.status(400).json('Must use a valid user id to update a user.');
+    }
     const userId = new ObjectId(req.params.id);
     const user = {
         firstName: req.body.firstName,
@@ -64,6 +70,9 @@ const updateData = async (req, res) => {
 }; 
 
 const deleteData = async (req, res) => {
+    if (!ObjectId.isValid(req.params.id)) {
+        res.status(400).json('Must use a valid user id to delete a user.');
+    }
     const userId = new ObjectId(req.params.id);
     const response = await mongodb.getDb().db('CSE341').collection('users').deleteOne({ _id: userId });
     if (response.deletedCount > 0) {
