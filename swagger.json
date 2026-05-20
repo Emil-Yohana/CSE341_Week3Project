@@ -5,10 +5,10 @@
     "description": "API for managing users and products in CSE341",
     "version": "1.0.0"
   },
-  "host": "cse341-week3project.onrender.com",
+  "host": "localhost:8080",
   "basePath": "/",
   "schemes": [
-    "https"
+    "http"
   ],
   "paths": {
     "/products/": {
