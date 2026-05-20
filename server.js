@@ -15,6 +15,10 @@ app.use('/products', productRoutes);
 app.use('/users', userRoutes);
 app.use('/', swaggerRoutes);
 
+process.on('uncaughtException', (err, origin) => {
+    console.log(process.stderr.fd, `Caught exception: ${err}\n` + `Exception Origin: ${origin}`);
+});
+
 mongodb.initDb((err, mongodb) => {
     if (err) {
         console.log(err);

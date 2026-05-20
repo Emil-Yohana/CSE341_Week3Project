@@ -2,17 +2,25 @@ const mongodb = require('../db/connect');
 const ObjectId = require('mongodb').ObjectId;
 
 const getAllData = (req, res) => {
-    mongodb.getDb().db('CSE341').collection('products').find().toArray().then((lists) => {
-        res.setHeader('Content-Type', 'application/json');
-        res.status(200).json(lists);
+    mongodb.getDb().db('CSE341').collection('products').find().toArray((err, lists) => {
+        if (err) {
+            res.status(500).json({ message: err });
+        } else {
+            res.setHeader('Content-Type', 'application/json');
+            res.status(200).json(lists);
+        }
     });
 };
 
 const getData = (req, res) => {
     const userId = new ObjectId(req.params.id);
-    mongodb.getDb().db('CSE341').collection('products').find({ _id: userId }).toArray().then((lists) => {
-        res.setHeader('Content-Type', 'application/json');
-        res.status(200).json(lists[0]);
+    mongodb.getDb().db('CSE341').collection('products').find({ _id: userId }).toArray((err, result) => {
+        if (err) {
+            res.status(500).json({ message: err });
+        } else {
+            res.setHeader('Content-Type', 'application/json');
+            res.status(200).json(result[0]);
+        }
     });
 };
 
