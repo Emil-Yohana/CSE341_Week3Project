@@ -16,14 +16,14 @@ app.use('/users', userRoutes);
 app.use('/', swaggerRoutes);
 
 process.on('uncaughtException', (err, origin) => {
-    console.log(process.stderr.fd, `Caught exception: ${err}\n` + `Exception Origin: ${origin}`);
+    console.error(`Caught exception: ${err}\nException Origin: ${origin}`);
 });
 
 mongodb.initDb((err, mongodb) => {
     if (err) {
         console.log(err);
     } else {
-        app.listen(process.env.port || port);
-        console.log('Connected to MongoDB and Web Server is listening at ' + (process.env.port || port));
+        app.listen(process.env.PORT || port);
+        console.log('Connected to MongoDB and Web Server is listening at ' + (process.env.PORT || port));
     }
 });

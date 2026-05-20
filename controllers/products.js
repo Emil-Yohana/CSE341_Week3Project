@@ -1,30 +1,28 @@
 const mongodb = require('../db/connect');
 const ObjectId = require('mongodb').ObjectId;
 
-const getAllData = (req, res) => {
-    mongodb.getDb().db('CSE341').collection('products').find().toArray((err, lists) => {
-        if (err) {
-            res.status(500).json({ message: err });
-        } else {
-            res.setHeader('Content-Type', 'application/json');
-            res.status(200).json(lists);
-        }
-    });
+const getAllData = async (req, res) => {
+    try {
+        const lists = await mongodb.getDb().db('CSE341').collection('products').find().toArray();
+        res.setHeader('Content-Type', 'application/json');
+        res.status(200).json(lists);
+    } catch (err) {
+        res.status(500).json({ message: err });
+    }
 };
 
-const getData = (req, res) => {
+const getData = async (req, res) => {
     if (!ObjectId.isValid(req.params.id)) {
-        res.status(400).json('Must use a valid product id to find a product.');
+        return res.status(400).json('Must use a valid product id to find a product.');
     }
     const userId = new ObjectId(req.params.id);
-    mongodb.getDb().db('CSE341').collection('products').find({ _id: userId }).toArray((err, result) => {
-        if (err) {
-            res.status(500).json({ message: err });
-        } else {
-            res.setHeader('Content-Type', 'application/json');
-            res.status(200).json(result[0]);
-        }
-    });
+    try {
+        const result = await mongodb.getDb().db('CSE341').collection('products').find({ _id: userId }).toArray();
+        res.setHeader('Content-Type', 'application/json');
+        res.status(200).json(result[0]);
+    } catch (err) {
+        res.status(500).json({ message: err });
+    }
 };
 
 const createData = async (req, res) => {
@@ -49,7 +47,7 @@ const createData = async (req, res) => {
 
 const updateData = async (req, res) => {
     if (!ObjectId.isValid(req.params.id)) {
-        res.status(400).json('Must use a valid product id to update a product.');
+        return res.status(400).json('Must use a valid product id to update a product.');
     }
     const userId = new ObjectId(req.params.id);
     const product = {
@@ -73,7 +71,7 @@ const updateData = async (req, res) => {
 
 const deleteData = async (req, res) => {
     if (!ObjectId.isValid(req.params.id)) {
-        res.status(400).json('Must use a valid product id to delete a product.');
+        return res.status(400).json('Must use a valid product id to delete a product.');
     }
     const userId = new ObjectId(req.params.id);
     const response = await mongodb.getDb().db('CSE341').collection('products').deleteOne({ _id: userId });
