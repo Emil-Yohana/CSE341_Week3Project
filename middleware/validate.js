@@ -24,4 +24,29 @@ const saveUser = (req, res, next) => {
     });
 };
 
-module.exports = { saveUser };
+const saveProduct = (req, res, next) => {
+    const validationRule = {
+        productId: 'required|string',
+        productName: 'required|string',
+        category: 'required|string',
+        brand: 'required|string',
+        price: 'required|numeric',
+        currency: 'required|string',
+        stock: 'required|integer',
+        sku: 'required|string',
+        rating: 'required|numeric'
+    };
+    validator(req.body, validationRule, {}, (err, status) => {
+        if (!status) {
+            res.status(412).send({
+                success:false,
+                message: 'Validation failed',
+                data: err
+            });
+        } else {
+            next();
+        }
+    });
+};
+
+module.exports = { saveUser, saveProduct };
