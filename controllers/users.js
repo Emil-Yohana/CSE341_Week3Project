@@ -26,21 +26,25 @@ const getData = async (req, res) => {
 };
 
 const createData = async (req, res) => {
-    const user = {
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
-        email: req.body.email,
-        favoriteColor: req.body.favoriteColor,
-        birthday: req.body.birthday,
-        address: req.body.address,
-        city: req.body.city,
-        postCode: req.body.postCode
-    };
-    const response = await mongodb.getDb().db('CSE341').collection('users').insertOne(user);
-    if (response.acknowledged) {
-        res.status(204).send();
-    } else {
-        res.status(500).json(response.error || 'Some error occurred while creating the user.');
+    try {
+        const user = {
+            firstName: req.body.firstName,
+            lastName: req.body.lastName,
+            email: req.body.email,
+            favoriteColor: req.body.favoriteColor,
+            birthday: req.body.birthday,
+            address: req.body.address,
+            city: req.body.city,
+            postCode: req.body.postCode
+        };
+        const response = await mongodb.getDb().db('CSE341').collection('users').insertOne(user);
+        if (response.acknowledged) {
+            res.status(204).send();
+        } else {
+            res.status(500).json(response.error || 'Some error occurred while creating the user.');
+        }
+    } catch (err) {
+        res.status(500).json({ message: err });
     }
 };
 
@@ -48,22 +52,26 @@ const updateData = async (req, res) => {
     if (!ObjectId.isValid(req.params.id)) {
         return res.status(400).json('Must use a valid user id to update a user.');
     }
-    const userId = new ObjectId(req.params.id);
-    const user = {
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
-        email: req.body.email,
-        favoriteColor: req.body.favoriteColor,
-        birthday: req.body.birthday,
-        address: req.body.address,
-        city: req.body.city,
-        postCode: req.body.postCode
-    };
-    const response = await mongodb.getDb().db('CSE341').collection('users').replaceOne({ _id: userId }, user);
-    if (response.modifiedCount > 0) {
-        res.status(204).send();
-    } else {
-        res.status(500).json(response.error || 'Some error occurred while updating the user.');
+    try {
+        const userId = new ObjectId(req.params.id);
+        const user = {
+            firstName: req.body.firstName,
+            lastName: req.body.lastName,
+            email: req.body.email,
+            favoriteColor: req.body.favoriteColor,
+            birthday: req.body.birthday,
+            address: req.body.address,
+            city: req.body.city,
+            postCode: req.body.postCode
+        };
+        const response = await mongodb.getDb().db('CSE341').collection('users').replaceOne({ _id: userId }, user);
+        if (response.modifiedCount > 0) {
+            res.status(204).send();
+        } else {
+            res.status(500).json(response.error || 'Some error occurred while updating the user.');
+        }
+    } catch (err) {
+        res.status(500).json({ message: err });
     }
 }; 
 
@@ -71,12 +79,16 @@ const deleteData = async (req, res) => {
     if (!ObjectId.isValid(req.params.id)) {
         return res.status(400).json('Must use a valid user id to delete a user.');
     }
-    const userId = new ObjectId(req.params.id);
-    const response = await mongodb.getDb().db('CSE341').collection('users').deleteOne({ _id: userId });
-    if (response.deletedCount > 0) {
-        res.status(204).send();
-    } else {
-        res.status(500).json(response.error || 'Some error occurred while deleting the user.');
+    try {
+        const userId = new ObjectId(req.params.id);
+        const response = await mongodb.getDb().db('CSE341').collection('users').deleteOne({ _id: userId });
+        if (response.deletedCount > 0) {
+            res.status(204).send();
+        } else {
+            res.status(500).json(response.error || 'Some error occurred while deleting the user.');
+        }
+    } catch (err) {
+        res.status(500).json({ message: err });
     }
 };
 
