@@ -19,7 +19,10 @@
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "A list of products was returned successfully."
+          },
+          "500": {
+            "description": "An internal server error occurred while retrieving products."
           }
         }
       },
@@ -65,10 +68,16 @@
         ],
         "responses": {
           "204": {
-            "description": "No Content"
+            "description": "The product was created successfully."
+          },
+          "401": {
+            "description": "Authentication is required to create a product."
+          },
+          "412": {
+            "description": "Product validation failed."
           },
           "500": {
-            "description": "Internal Server Error"
+            "description": "An internal server error occurred while creating the product."
           }
         }
       }
@@ -89,7 +98,13 @@
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "The requested product was returned successfully."
+          },
+          "400": {
+            "description": "The provided product id is invalid."
+          },
+          "500": {
+            "description": "An internal server error occurred while retrieving the product."
           }
         }
       },
@@ -141,10 +156,19 @@
         ],
         "responses": {
           "204": {
-            "description": "No Content"
+            "description": "The product was updated successfully."
+          },
+          "401": {
+            "description": "Authentication is required to update a product."
+          },
+          "412": {
+            "description": "Product validation failed."
+          },
+          "400": {
+            "description": "The provided product id is invalid."
           },
           "500": {
-            "description": "Internal Server Error"
+            "description": "An internal server error occurred while updating the product."
           }
         }
       },
@@ -160,10 +184,16 @@
         ],
         "responses": {
           "204": {
-            "description": "No Content"
+            "description": "The product was deleted successfully."
+          },
+          "401": {
+            "description": "Authentication is required to delete a product."
+          },
+          "400": {
+            "description": "The provided product id is invalid."
           },
           "500": {
-            "description": "Internal Server Error"
+            "description": "An internal server error occurred while deleting the product."
           }
         }
       }
@@ -176,7 +206,10 @@
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "A list of users was returned successfully."
+          },
+          "500": {
+            "description": "An internal server error occurred while retrieving users."
           }
         }
       },
@@ -219,10 +252,16 @@
         ],
         "responses": {
           "204": {
-            "description": "No Content"
+            "description": "The user was created successfully."
+          },
+          "401": {
+            "description": "Authentication is required to create a user."
+          },
+          "412": {
+            "description": "User validation failed."
           },
           "500": {
-            "description": "Internal Server Error"
+            "description": "An internal server error occurred while creating the user."
           }
         }
       }
@@ -243,7 +282,13 @@
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "The requested user was returned successfully."
+          },
+          "400": {
+            "description": "The provided user id is invalid."
+          },
+          "500": {
+            "description": "An internal server error occurred while retrieving the user."
           }
         }
       },
@@ -292,10 +337,19 @@
         ],
         "responses": {
           "204": {
-            "description": "No Content"
+            "description": "The user was updated successfully."
+          },
+          "401": {
+            "description": "Authentication is required to update a user."
+          },
+          "412": {
+            "description": "User validation failed."
+          },
+          "400": {
+            "description": "The provided user id is invalid."
           },
           "500": {
-            "description": "Internal Server Error"
+            "description": "An internal server error occurred while updating the user."
           }
         }
       },
@@ -311,10 +365,16 @@
         ],
         "responses": {
           "204": {
-            "description": "No Content"
+            "description": "The user was deleted successfully."
+          },
+          "401": {
+            "description": "Authentication is required to delete a user."
+          },
+          "400": {
+            "description": "The provided user id is invalid."
           },
           "500": {
-            "description": "Internal Server Error"
+            "description": "An internal server error occurred while deleting the user."
           }
         }
       }
